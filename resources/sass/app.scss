@@ -1,8 +1,28 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@font-face {
+    font-family: '6387a14a';
+    src: url('/fonts/6387a14a.eot');
+    src: url('/fonts/6387a14a.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/6387a14a.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 
-// Variables
-@import 'variables';
+@font-face {
+    font-family: 'IRANYekanWeb-Medium';
+    src: url('/fonts/IRANYekanWeb-Medium.svg#IRANYekanWeb-Medium') format('svg'),
+    url('/fonts/IRANYekanWeb-Medium.ttf') format('truetype'),
+    url('/fonts/IRANYekanWeb-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+* {
+    font-family: 'IRANYekanWeb-Medium', sans-serif;
+}
+
+.v-sheet.v-app-bar.v-toolbar:not(.v-sheet--outlined) {
+    box-shadow: none !important;
+    background: white !important;
+    border-bottom: 1px solid #e0e0e0;
+    height: 65px !important;
+}

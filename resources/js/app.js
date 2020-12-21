@@ -11,7 +11,12 @@ Vue.use(VueRouter)
 Vue.component('test-page', require('./components/test').default);
 
 const routes = [
-    {path: '/foo', component: require('./components/ExampleComponent').default},
+    {path: '/userWallet', component: require('./components/admin/userWallet').default},
+    {path: '/addUser', component: require('./components/admin/addUser').default},
+    {path: '/addProduct', component: require('./components/admin/addProduct').default},
+    {path: '/submitOrder', component: require('./components/admin/submitOrder').default},
+    {path: '/productList', component: require('./components/admin/productList').default},
+    {path: '/reports', component: require('./components/admin/reports').default},
 ]
 
 const router = new VueRouter({
@@ -22,7 +27,7 @@ const router = new VueRouter({
 const app = new Vue({
     el: '#app',
     vuetify: new Vuetify({
-        rtl:true,
+        rtl: true,
         icons: {
             iconfont: 'mdi',
         },

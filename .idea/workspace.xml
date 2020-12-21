@@ -2,7 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="76766d97-eb35-43f5-b208-6dc9ee40a659" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/fonts/6387a14a.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/fonts/6387a14a.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/fonts/IRANYekanWeb-Medium.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/fonts/IRANYekanWeb-Medium.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/fonts/IRANYekanWeb-Medium.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/fonts/font.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/test.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/test.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +157,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Sima" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/fonts" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2020.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
@@ -153,6 +165,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\laravel\public\fonts" />
       <recent name="C:\xampp\htdocs\laravel\resources\js\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -176,7 +189,8 @@
       <workItem from="1608445262795" duration="3148000" />
       <workItem from="1608449271537" duration="166000" />
       <workItem from="1608449863713" duration="350000" />
-      <workItem from="1608464361259" duration="4358000" />
+      <workItem from="1608464361259" duration="4615000" />
+      <workItem from="1608551168587" duration="4252000" />
     </task>
     <servers />
   </component>

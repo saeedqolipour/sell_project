@@ -26,3 +26,7 @@
     border-bottom: 1px solid #e0e0e0;
     height: 65px !important;
 }
+
+.v-card__title, .headline, .v-card > .v-card__progress + :not(.v-btn):not(.v-chip), .v-card > :first-child:not(.v-btn):not(.v-chip) {
+    font-family: 'IRANYekanWeb-Medium', sans-serif !important;
+}

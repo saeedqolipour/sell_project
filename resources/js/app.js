@@ -4,11 +4,12 @@ import Vuetify from 'vuetify'
 import VueRouter from 'vue-router'
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/dist/vuetify.min.css'
+import 'sweetalert2/src/sweetalert2.scss'
 
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 
-Vue.component('test-page', require('./components/test').default);
+Vue.component('test-page', require('./components/panel').default);
 
 const routes = [
     {path: '/userWallet', component: require('./components/admin/userWallet').default},

@@ -47,7 +47,7 @@
         <v-main>
             <v-container>
                 <v-row>
-                    <v-col class="lg-12 md-12 mr-5">
+                    <v-col class="lg-12 md-12">
                         <router-view></router-view>
                     </v-col>
                 </v-row>
@@ -62,6 +62,7 @@ export default {
         drawer: null,
         selectedItem: 0,
         items: [
+            {text: 'صفحه اصلی', icon: 'mdi-home', to: '/'},
             {text: 'افزودن کاربر', icon: 'mdi-account', to: '/addUser'},
             {text: 'مشاهده موجودی کاربر', icon: 'mdi-credit-card', to: '/userWallet'},
             {text: 'افزودن محصول', icon: 'mdi-plus-box-outline', to: '/addProduct'},
@@ -69,7 +70,7 @@ export default {
             {text: 'ثبت سفارش', icon: 'mdi-cart-plus', to: '/submitOrder'},
             {text: 'گزارشات', icon: 'mdi-chart-bar', to: '/reports'},
         ],
-    }),
+    })
 }
 </script>
 

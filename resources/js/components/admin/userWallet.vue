@@ -14,6 +14,7 @@
                             :rules="nationalCodeRules"
                             :counter="10"
                             type="number"
+                            min="0"
                             solo
                             append-icon="mdi-qrcode"
                         ></v-text-field>

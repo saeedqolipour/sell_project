@@ -1997,8 +1997,112 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "addProduct"
+  name: "addProduct",
+  data: function data() {
+    return {
+      valid: true,
+      productName: '',
+      productPrice: '',
+      nationalCode: '',
+      mobileNumber: '',
+      loading: false,
+      productRules: [function (v) {
+        return !!v || 'لطفا نام محصول را وارد نمایید';
+      }, function (v) {
+        return v.length >= 3 || 'نام محصول باید حداقل 3 کاراکتر باشد';
+      }],
+      productPriceRules: [function (v) {
+        return !!v || 'لطفا قیمت محصول را وارد نمایید';
+      }, function (v) {
+        return v.length >= 4 || 'قیمت محصول باید حداقل 1,000 تومان  باشد';
+      }]
+    };
+  },
+  methods: {
+    loader: function loader() {
+      var _this = this;
+
+      this.loading = true;
+      axios.post('api/product', {
+        productName: this.productName,
+        productPrice: this.productPrice
+      }).then(function (response) {
+        Swal.fire({
+          title: response.data.title,
+          text: response.data.message,
+          icon: response.data.type,
+          confirmButtonText: 'تمام'
+        });
+        _this.loading = false;
+      })["catch"](function (error) {
+        Swal.fire({
+          title: 'خطا',
+          text: 'عملیات با خطا موجه شد',
+          icon: 'error',
+          confirmButtonText: 'تمام'
+        });
+      });
+      this.loading = false;
+    },
+    formValidate: function formValidate() {
+      if (this.$refs.form.validate()) {
+        this.loader();
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -2012,6 +2116,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2170,8 +2276,62 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "productList"
+  name: "productList",
+  data: function data() {
+    return {
+      products: []
+    };
+  },
+  beforeMount: function beforeMount() {
+    var _this = this;
+
+    axios.get('api/product').then(function (response) {
+      _this.products = response.data.products;
+    })["catch"](function (error) {
+      Swal.fire({
+        title: 'خطا',
+        text: 'عملیات با خطا موجه شد',
+        icon: 'error',
+        confirmButtonText: 'تمام'
+      });
+    });
+  }
 });
 
 /***/ }),
@@ -2208,8 +2368,121 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "submitOrder"
+  name: "submitOrder",
+  data: function data() {
+    return {
+      products: [],
+      selectedUser: [],
+      nameAndFamily: 'سعید قلی پور',
+      totalPrice: 0,
+      nationalCode: 0,
+      users: [],
+      selectedProducts: [],
+      dialog: false,
+      value: null
+    };
+  },
+  methods: {
+    showSaveOrderDialog: function showSaveOrderDialog() {
+      console.log(this.selectedProducts);
+      this.dialog = true;
+    }
+  },
+  beforeMount: function beforeMount() {
+    var _this = this;
+
+    axios.get('api/product').then(function (response) {
+      _this.products = response.data.products;
+    })["catch"](function (error) {
+      Swal.fire({
+        title: 'خطا',
+        text: 'عملیات با خطا موجه شد',
+        icon: 'error',
+        confirmButtonText: 'تمام'
+      });
+    });
+    axios.get('api/user').then(function (response) {
+      _this.users = response.data.users;
+    })["catch"](function (error) {
+      Swal.fire({
+        title: 'خطا',
+        text: 'عملیات با خطا موجه شد',
+        icon: 'error',
+        confirmButtonText: 'تمام'
+      });
+    });
+  }
 });
 
 /***/ }),
@@ -2223,6 +2496,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -38757,7 +39031,123 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("p", [_vm._v("Add Product Form")])
+  return _c(
+    "div",
+    [
+      _c(
+        "v-form",
+        {
+          ref: "form",
+          attrs: { "lazy-validation": "" },
+          model: {
+            value: _vm.valid,
+            callback: function($$v) {
+              _vm.valid = $$v
+            },
+            expression: "valid"
+          }
+        },
+        [
+          _c(
+            "v-container",
+            [
+              _c("h1", { staticClass: "mb-5" }, [_vm._v("افزودن محصول")]),
+              _vm._v(" "),
+              _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    [
+                      _c("v-text-field", {
+                        attrs: {
+                          label: "نام محصول",
+                          solo: "",
+                          "append-icon": "mdi-account-box-outline",
+                          rules: _vm.productRules,
+                          counter: 50,
+                          maxLength: 50,
+                          required: ""
+                        },
+                        model: {
+                          value: _vm.productName,
+                          callback: function($$v) {
+                            _vm.productName = $$v
+                          },
+                          expression: "productName"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("v-text-field", {
+                        attrs: {
+                          rules: _vm.productPriceRules,
+                          counter: 10,
+                          type: "number",
+                          label: "قیمت محصول",
+                          step: "1000",
+                          min: "0",
+                          solo: "",
+                          "append-icon": "mdi-account-box-outline"
+                        },
+                        model: {
+                          value: _vm.productPrice,
+                          callback: function($$v) {
+                            _vm.productPrice = $$v
+                          },
+                          expression: "productPrice"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: {
+                    depressed: "",
+                    color: "success",
+                    loading: _vm.loading
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.formValidate()
+                    }
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "loader",
+                      fn: function() {
+                        return [_c("span", [_vm._v("لطفا صبر کنید ...")])]
+                      },
+                      proxy: true
+                    }
+                  ])
+                },
+                [
+                  _c("v-icon", { staticClass: "ml-2", attrs: { dark: "" } }, [
+                    _vm._v(
+                      "\n                    mdi-account-box\n                "
+                    )
+                  ]),
+                  _vm._v(
+                    "\n                ثبت اطلاعات محصول\n                "
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38852,6 +39242,7 @@ var render = function() {
                           rules: _vm.nationalCodeRules,
                           counter: 10,
                           type: "number",
+                          min: "0",
                           solo: "",
                           "append-icon": "mdi-qrcode"
                         },
@@ -38870,6 +39261,7 @@ var render = function() {
                           counter: 11,
                           label: "شماره همراه",
                           type: "number",
+                          min: "0",
                           solo: "",
                           "append-icon": "mdi-cellphone-iphone"
                         },
@@ -38940,10 +39332,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232&scoped=true&":
-/*!********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232&scoped=true& ***!
-  \********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232& ***!
+  \********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38955,7 +39347,83 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("p", [_vm._v("Product List")])
+  return _c(
+    "div",
+    [
+      _c(
+        "v-container",
+        [
+          _c("h1", { staticClass: "mb-5" }, [_vm._v("لیست محصولات")]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                [
+                  _c("v-simple-table", {
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function() {
+                          return [
+                            _c("thead", [
+                              _c("tr", [
+                                _c("th", { staticClass: "text-right" }, [
+                                  _vm._v(
+                                    "\n                                ردیف\n                            "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("th", { staticClass: "text-right" }, [
+                                  _vm._v(
+                                    "\n                                نام محصول\n                            "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("th", { staticClass: "text-right" }, [
+                                  _vm._v(
+                                    "\n                                قیمت محصول\n                            "
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(_vm.products, function(product) {
+                                return _c("tr", { key: product.id }, [
+                                  _c("td", [_vm._v(_vm._s(product.id))]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(_vm._s(product.product_name))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(_vm._s(product.product_price))
+                                  ])
+                                ])
+                              }),
+                              0
+                            )
+                          ]
+                        },
+                        proxy: true
+                      }
+                    ])
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -39003,7 +39471,169 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("p", [_vm._v("Submit Order Form")])
+  return _c(
+    "div",
+    [
+      _c(
+        "v-container",
+        [
+          _c("h1", { staticClass: "mb-5" }, [_vm._v("ثبت سفارش")]),
+          _vm._v(" "),
+          _c(
+            "v-row",
+            [
+              _c(
+                "v-col",
+                { attrs: { cols: "12" } },
+                [
+                  _c("v-autocomplete", {
+                    attrs: {
+                      items: _vm.users,
+                      "item-text": "national_code",
+                      "item-value": "id",
+                      label: "جستجوی کاربر",
+                      solo: ""
+                    },
+                    model: {
+                      value: _vm.selectedUser,
+                      callback: function($$v) {
+                        _vm.selectedUser = $$v
+                      },
+                      expression: "selectedUser"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-autocomplete", {
+                    attrs: {
+                      items: _vm.products,
+                      "item-text": "product_name",
+                      "item-value": "id",
+                      chips: "",
+                      label: "انتخاب محصول",
+                      multiple: "",
+                      solo: ""
+                    },
+                    model: {
+                      value: _vm.selectedProducts,
+                      callback: function($$v) {
+                        _vm.selectedProducts = $$v
+                      },
+                      expression: "selectedProducts"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            {
+              attrs: { depressed: "", color: "success" },
+              on: {
+                click: function($event) {
+                  return _vm.showSaveOrderDialog()
+                }
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "loader",
+                  fn: function() {
+                    return [_c("span", [_vm._v("لطفا صبر کنید ...")])]
+                  },
+                  proxy: true
+                }
+              ])
+            },
+            [
+              _c("v-icon", { staticClass: "ml-2", attrs: { dark: "" } }, [
+                _vm._v("\n                mdi-account-box\n            ")
+              ]),
+              _vm._v("\n            ثبت سفارش کاربر\n            ")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          [
+            _c(
+              "v-row",
+              { attrs: { justify: "center" } },
+              [
+                _c(
+                  "v-dialog",
+                  {
+                    attrs: { persistent: "", "max-width": "400" },
+                    model: {
+                      value: _vm.dialog,
+                      callback: function($$v) {
+                        _vm.dialog = $$v
+                      },
+                      expression: "dialog"
+                    }
+                  },
+                  [
+                    _c(
+                      "v-card",
+                      [
+                        _c("v-card-title", { staticClass: "headline" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.nameAndFamily) +
+                              "\n                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("v-card-text", [
+                          _vm._v(
+                            "\n                            جمع کل خرید : " +
+                              _vm._s(_vm.totalPrice) +
+                              " تومان\n                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "v-card-actions",
+                          [
+                            _c("v-spacer"),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass: "mb-2",
+                                attrs: { color: "success" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.dialog = false
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                ثبت نهایی سفارش\n                            "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ]
+        ],
+        2
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -39063,6 +39693,7 @@ var render = function() {
                           rules: _vm.nationalCodeRules,
                           counter: 10,
                           type: "number",
+                          min: "0",
                           solo: "",
                           "append-icon": "mdi-qrcode"
                         },
@@ -98899,7 +99530,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _productList_vue_vue_type_template_id_54ebc232_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./productList.vue?vue&type=template&id=54ebc232&scoped=true& */ "./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232&scoped=true&");
+/* harmony import */ var _productList_vue_vue_type_template_id_54ebc232___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./productList.vue?vue&type=template&id=54ebc232& */ "./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232&");
 /* harmony import */ var _productList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./productList.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/productList.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -98911,11 +99542,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _productList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _productList_vue_vue_type_template_id_54ebc232_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _productList_vue_vue_type_template_id_54ebc232_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _productList_vue_vue_type_template_id_54ebc232___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _productList_vue_vue_type_template_id_54ebc232___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "54ebc232",
+  null,
   null
   
 )
@@ -98941,19 +99572,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232&scoped=true&":
-/*!**************************************************************************************************!*\
-  !*** ./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232&scoped=true& ***!
-  \**************************************************************************************************/
+/***/ "./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232& ***!
+  \**************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_productList_vue_vue_type_template_id_54ebc232_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./productList.vue?vue&type=template&id=54ebc232&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_productList_vue_vue_type_template_id_54ebc232_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_productList_vue_vue_type_template_id_54ebc232___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./productList.vue?vue&type=template&id=54ebc232& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/productList.vue?vue&type=template&id=54ebc232&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_productList_vue_vue_type_template_id_54ebc232___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_productList_vue_vue_type_template_id_54ebc232_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_productList_vue_vue_type_template_id_54ebc232___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

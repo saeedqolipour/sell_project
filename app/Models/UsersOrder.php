@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserWallet extends Model
+class UsersOrder extends Model
 {
     use HasFactory;
 
-    protected $table = 'users_wallet';
+    protected $table = 'users_order';
     protected $fillable = [
         'user_id',
-        'wallet_balance',
+        'product_id',
+        'price',
     ];
 }

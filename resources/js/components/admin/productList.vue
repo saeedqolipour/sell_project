@@ -4,33 +4,28 @@
             <h1 class="mb-5">لیست محصولات</h1>
             <v-row>
                 <v-col>
-                    <v-simple-table>
-                        <template v-slot:default>
-                            <thead>
-                            <tr>
-                                <th class="text-right">
-                                    ردیف
-                                </th>
-                                <th class="text-right">
-                                    نام محصول
-                                </th>
-                                <th class="text-right">
-                                    قیمت محصول
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr
-                                v-for="product in products"
-                                :key="product.id"
-                            >
-                                <td>{{ product.id }}</td>
-                                <td>{{ product.product_name }}</td>
-                                <td>{{ product.product_price }}</td>
-                            </tr>
-                            </tbody>
-                        </template>
-                    </v-simple-table>
+                    <template>
+                        <v-card>
+                            <v-card-title>
+                                لیست محصولات و قیمت ها
+                                <v-spacer></v-spacer>
+                                <v-text-field
+                                    v-model="search"
+                                    append-icon="mdi-magnify"
+                                    label="جستجوی محصول ..."
+                                    single-line
+                                    solo
+                                    hide-details
+                                ></v-text-field>
+                            </v-card-title>
+                            <v-data-table
+                                :headers="headers"
+                                :items="products"
+                                :search="search"
+                                :footer-props="{'items-per-page-text':'نمایش محصولات در هر صفحه'}"
+                            ></v-data-table>
+                        </v-card>
+                    </template>
                 </v-col>
             </v-row>
         </v-container>
@@ -43,8 +38,16 @@ export default {
     data() {
         return {
             products: [],
+            search: '',
+            headers: [
+                {text: 'ردیف', sortable: false, value: 'id'},
+                {text: 'نام محصول', value: 'product_name'},
+                {text: 'قیمت محصول', value: 'product_price'},
+            ],
         }
-    }, beforeMount() {
+    }
+    ,
+    beforeMount() {
         axios.get('api/product').then((response) => {
             this.products = response.data.products
         }).catch((error) => {

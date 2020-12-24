@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\UserWallet;
+use App\Models\UsersWallet;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -46,7 +46,7 @@ class UserController extends Controller
                 'mobile_number' => $request->get('mobileNumber'),
             ]);
             if ($user) {
-                UserWallet::create([
+                UsersWallet::create([
                     'user_id' => $user->id,
                     'wallet_balance' => 0
                 ]);

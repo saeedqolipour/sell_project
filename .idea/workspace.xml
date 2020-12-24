@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="76766d97-eb35-43f5-b208-6dc9ee40a659" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersOrderController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersWalletController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/UsersWallet.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_12_22_113411_create_product_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_12_22_113411_create_product_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/UserWallet.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UsersOrder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/addProduct.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/addProduct.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/addUser.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/addUser.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/admin/productList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/productList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/admin/submitOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/submitOrder.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/admin/userWallet.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/admin/userWallet.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,16 +150,19 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1luRzwu8o68Tw17d8kZfc8GNgcV" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../repo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2020.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
@@ -171,11 +178,26 @@
       <recent name="C:\xampp\htdocs\laravel\resources\js" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="PHPUnit.phpunit.xml">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
+    <configuration name="watch" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="watch" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.watch" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -190,7 +212,13 @@
       <workItem from="1608449863713" duration="350000" />
       <workItem from="1608464361259" duration="4615000" />
       <workItem from="1608551168587" duration="4252000" />
-      <workItem from="1608616123990" duration="23313000" />
+      <workItem from="1608616123990" duration="23363000" />
+      <workItem from="1608702234580" duration="1332000" />
+      <workItem from="1608707587507" duration="558000" />
+      <workItem from="1608727311698" duration="977000" />
+      <workItem from="1608788875400" duration="23000" />
+      <workItem from="1608789055464" duration="8303000" />
+      <workItem from="1608799662979" duration="178000" />
     </task>
     <servers />
   </component>
@@ -210,6 +238,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <ignored-roots>
       <path value="$PROJECT_DIR$/../../../" />
     </ignored-roots>

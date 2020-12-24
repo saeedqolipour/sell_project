@@ -9,19 +9,20 @@
                         :items="users"
                         :item-text="'national_code'"
                         :item-value="'id'"
-                        label="جستجوی کاربر"
+                        label="جستجوی کاربر بر اساس کد ملی"
                         solo
                     ></v-autocomplete>
                     <v-autocomplete
                         v-model="selectedProducts"
                         :items="products"
-                        :item-text="'product_name'"
+                        :item-text="productText"
                         :item-value="'id'"
                         chips
                         label="انتخاب محصول"
                         multiple
                         solo
-                    ></v-autocomplete>
+                    >
+                    </v-autocomplete>
                 </v-col>
             </v-row>
             <v-btn
@@ -33,9 +34,9 @@
                     dark
                     class="ml-2"
                 >
-                    mdi-account-box
+                    mdi-cart
                 </v-icon>
-                ثبت سفارش کاربر
+                مشاهده فاکتور + پرداخت
                 <template v-slot:loader>
                     <span>لطفا صبر کنید ...</span>
                 </template>
@@ -58,8 +59,16 @@
                                 <v-spacer></v-spacer>
                                 <v-btn
                                     class="mb-2"
-                                    color="success"
+                                    color="black"
+                                    text
                                     @click="dialog = false"
+                                >
+                                    انصراف
+                                </v-btn>
+                                <v-btn
+                                    class="mb-2"
+                                    color="success"
+                                    @click="saveOrder"
                                 >
                                     ثبت نهایی سفارش
                                 </v-btn>
@@ -78,9 +87,8 @@ export default {
     data: () => ({
         products: [],
         selectedUser: [],
-        nameAndFamily: 'سعید قلی پور',
+        nameAndFamily: '',
         totalPrice: 0,
-        nationalCode: 0,
         users: [],
         selectedProducts: [],
         dialog: false,
@@ -88,7 +96,53 @@ export default {
     }), methods: {
         showSaveOrderDialog() {
             console.log(this.selectedProducts)
-            this.dialog = true
+            if (this.selectedProducts.length === 0 || this.selectedUser.length === 0) {
+                Swal.fire({
+                    title: 'خطا',
+                    text: 'لطفا تمام فیلد ها را تکمیل نمایید',
+                    icon: 'error',
+                    confirmButtonText: 'تمام'
+                })
+            } else {
+                axios.post('api/product/getOrderProducts', {
+                    orders: this.selectedProducts,
+                    userId: this.selectedUser
+                }).then((response) => {
+                    if (response.data.status === 0) {
+                        Swal.fire({
+                            title: 'عدم موجودی کافی',
+                            text: 'موجودی کاربر : ' + response.data.wallet + ' تومان ',
+                            icon: 'error',
+                            confirmButtonText: 'تمام'
+                        })
+                    } else {
+                        this.totalPrice = response.data.totalPrice
+                        this.nameAndFamily = response.data.user.first_name + ' ' + response.data.user.last_name
+                        this.dialog = true
+                    }
+                }).catch((error) => {
+                    console.log("error")
+                });
+            }
+        },
+        productText(item) {
+            return `${item.product_name} • ${item.product_price} تومان `
+        },
+        saveOrder() {
+            axios.post('api/orders', {
+                orders: this.selectedProducts,
+                userId: this.selectedUser
+            }).then((response) => {
+                Swal.fire({
+                    title: response.data.title,
+                    text: response.data.message,
+                    icon: response.data.type,
+                    confirmButtonText: 'تمام'
+                })
+                this.dialog = false
+            }).catch((error) => {
+                console.log("error")
+            });
         }
     }, beforeMount() {
         axios.get('api/product').then((response) => {

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
+use App\Models\UsersWallet;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -10,7 +12,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -95,5 +97,22 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getOrderProducts(Request $request)
+    {
+        $user = User::find($request->get('userId'));
+        $userWallet = UsersWallet::find($user->id);
+        $walletStatus = 0;
+        $orderProducts = Product::find($request->get('orders'));
+        $totalPrice = 0;
+        foreach ($orderProducts as $order) {
+            $totalPrice += $order->product_price;
+        }
+        if ($userWallet->wallet_balance >= $totalPrice) {
+            $walletStatus = 1;
+            return response()->json(['totalPrice' => $totalPrice, 'user' => $user, 'wallet' => $walletStatus]);
+        }
+        return response()->json(['user' => $user, 'wallet' => $userWallet->wallet_balance, 'status' => $walletStatus]);
     }
 }

@@ -2306,16 +2306,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "productList",
   data: function data() {
     return {
-      products: []
+      products: [],
+      search: '',
+      headers: [{
+        text: 'ردیف',
+        sortable: false,
+        value: 'id'
+      }, {
+        text: 'نام محصول',
+        value: 'product_name'
+      }, {
+        text: 'قیمت محصول',
+        value: 'product_price'
+      }]
     };
   },
   beforeMount: function beforeMount() {
@@ -2438,15 +2445,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "submitOrder",
   data: function data() {
     return {
       products: [],
       selectedUser: [],
-      nameAndFamily: 'سعید قلی پور',
+      nameAndFamily: '',
       totalPrice: 0,
-      nationalCode: 0,
       users: [],
       selectedProducts: [],
       dialog: false,
@@ -2455,15 +2470,66 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     showSaveOrderDialog: function showSaveOrderDialog() {
+      var _this = this;
+
       console.log(this.selectedProducts);
-      this.dialog = true;
+
+      if (this.selectedProducts.length === 0 || this.selectedUser.length === 0) {
+        Swal.fire({
+          title: 'خطا',
+          text: 'لطفا تمام فیلد ها را تکمیل نمایید',
+          icon: 'error',
+          confirmButtonText: 'تمام'
+        });
+      } else {
+        axios.post('api/product/getOrderProducts', {
+          orders: this.selectedProducts,
+          userId: this.selectedUser
+        }).then(function (response) {
+          if (response.data.status === 0) {
+            Swal.fire({
+              title: 'عدم موجودی کافی',
+              text: 'موجودی کاربر : ' + response.data.wallet + ' تومان ',
+              icon: 'error',
+              confirmButtonText: 'تمام'
+            });
+          } else {
+            _this.totalPrice = response.data.totalPrice;
+            _this.nameAndFamily = response.data.user.first_name + ' ' + response.data.user.last_name;
+            _this.dialog = true;
+          }
+        })["catch"](function (error) {
+          console.log("error");
+        });
+      }
+    },
+    productText: function productText(item) {
+      return "".concat(item.product_name, " \u2022 ").concat(item.product_price, " \u062A\u0648\u0645\u0627\u0646 ");
+    },
+    saveOrder: function saveOrder() {
+      var _this2 = this;
+
+      axios.post('api/orders', {
+        orders: this.selectedProducts,
+        userId: this.selectedUser
+      }).then(function (response) {
+        Swal.fire({
+          title: response.data.title,
+          text: response.data.message,
+          icon: response.data.type,
+          confirmButtonText: 'تمام'
+        });
+        _this2.dialog = false;
+      })["catch"](function (error) {
+        console.log("error");
+      });
     }
   },
   beforeMount: function beforeMount() {
-    var _this = this;
+    var _this3 = this;
 
     axios.get('api/product').then(function (response) {
-      _this.products = response.data.products;
+      _this3.products = response.data.products;
     })["catch"](function (error) {
       Swal.fire({
         title: 'خطا',
@@ -2473,7 +2539,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     });
     axios.get('api/user').then(function (response) {
-      _this.users = response.data.users;
+      _this3.users = response.data.users;
     })["catch"](function (error) {
       Swal.fire({
         title: 'خطا',
@@ -39361,59 +39427,54 @@ var render = function() {
               _c(
                 "v-col",
                 [
-                  _c("v-simple-table", {
-                    scopedSlots: _vm._u([
-                      {
-                        key: "default",
-                        fn: function() {
-                          return [
-                            _c("thead", [
-                              _c("tr", [
-                                _c("th", { staticClass: "text-right" }, [
-                                  _vm._v(
-                                    "\n                                ردیف\n                            "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("th", { staticClass: "text-right" }, [
-                                  _vm._v(
-                                    "\n                                نام محصول\n                            "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("th", { staticClass: "text-right" }, [
-                                  _vm._v(
-                                    "\n                                قیمت محصول\n                            "
-                                  )
-                                ])
-                              ])
-                            ]),
+                  [
+                    _c(
+                      "v-card",
+                      [
+                        _c(
+                          "v-card-title",
+                          [
+                            _vm._v(
+                              "\n                            لیست محصولات و قیمت ها\n                            "
+                            ),
+                            _c("v-spacer"),
                             _vm._v(" "),
-                            _c(
-                              "tbody",
-                              _vm._l(_vm.products, function(product) {
-                                return _c("tr", { key: product.id }, [
-                                  _c("td", [_vm._v(_vm._s(product.id))]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(_vm._s(product.product_name))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(_vm._s(product.product_price))
-                                  ])
-                                ])
-                              }),
-                              0
-                            )
-                          ]
-                        },
-                        proxy: true
-                      }
-                    ])
-                  })
+                            _c("v-text-field", {
+                              attrs: {
+                                "append-icon": "mdi-magnify",
+                                label: "جستجوی محصول ...",
+                                "single-line": "",
+                                solo: "",
+                                "hide-details": ""
+                              },
+                              model: {
+                                value: _vm.search,
+                                callback: function($$v) {
+                                  _vm.search = $$v
+                                },
+                                expression: "search"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("v-data-table", {
+                          attrs: {
+                            headers: _vm.headers,
+                            items: _vm.products,
+                            search: _vm.search,
+                            "footer-props": {
+                              "items-per-page-text": "نمایش محصولات در هر صفحه"
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ]
                 ],
-                1
+                2
               )
             ],
             1
@@ -39491,7 +39552,7 @@ var render = function() {
                       items: _vm.users,
                       "item-text": "national_code",
                       "item-value": "id",
-                      label: "جستجوی کاربر",
+                      label: "جستجوی کاربر بر اساس کد ملی",
                       solo: ""
                     },
                     model: {
@@ -39506,7 +39567,7 @@ var render = function() {
                   _c("v-autocomplete", {
                     attrs: {
                       items: _vm.products,
-                      "item-text": "product_name",
+                      "item-text": _vm.productText,
                       "item-value": "id",
                       chips: "",
                       label: "انتخاب محصول",
@@ -39549,9 +39610,9 @@ var render = function() {
             },
             [
               _c("v-icon", { staticClass: "ml-2", attrs: { dark: "" } }, [
-                _vm._v("\n                mdi-account-box\n            ")
+                _vm._v("\n                mdi-cart\n            ")
               ]),
-              _vm._v("\n            ثبت سفارش کاربر\n            ")
+              _vm._v("\n            مشاهده فاکتور + پرداخت\n            ")
             ],
             1
           ),
@@ -39602,12 +39663,26 @@ var render = function() {
                               "v-btn",
                               {
                                 staticClass: "mb-2",
-                                attrs: { color: "success" },
+                                attrs: { color: "black", text: "" },
                                 on: {
                                   click: function($event) {
                                     _vm.dialog = false
                                   }
                                 }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                انصراف\n                            "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-btn",
+                              {
+                                staticClass: "mb-2",
+                                attrs: { color: "success" },
+                                on: { click: _vm.saveOrder }
                               },
                               [
                                 _vm._v(

@@ -64,6 +64,7 @@ export default {
         items: [
             {text: 'صفحه اصلی', icon: 'mdi-home', to: '/'},
             {text: 'افزودن کاربر', icon: 'mdi-account', to: '/addUser'},
+            {text: 'افزایش موجودی', icon: 'mdi-credit-card-plus', to: '/walletCharge'},
             {text: 'مشاهده موجودی کاربر', icon: 'mdi-credit-card', to: '/userWallet'},
             {text: 'افزودن محصول', icon: 'mdi-plus-box-outline', to: '/addProduct'},
             {text: 'لیست محصولات', icon: 'mdi-view-module', to: '/productList'},

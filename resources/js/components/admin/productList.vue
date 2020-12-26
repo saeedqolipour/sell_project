@@ -23,7 +23,14 @@
                                 :items="products"
                                 :search="search"
                                 :footer-props="{'items-per-page-text':'نمایش محصولات در هر صفحه'}"
-                            ></v-data-table>
+                            >
+                                <template v-slot:item.productPrice="{ item }">
+                                    {{ item.product_price }} تومان
+                                </template>
+                                <template v-slot:no-data>
+                                    هیچ محصولی جهت نمایش وجود ندارد
+                                </template>
+                            </v-data-table>
                         </v-card>
                     </template>
                 </v-col>
@@ -42,7 +49,7 @@ export default {
             headers: [
                 {text: 'ردیف', sortable: false, value: 'id'},
                 {text: 'نام محصول', value: 'product_name'},
-                {text: 'قیمت محصول', value: 'product_price'},
+                {text: 'قیمت محصول', value: 'productPrice'},
             ],
         }
     }

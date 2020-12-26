@@ -9,7 +9,7 @@ import 'sweetalert2/src/sweetalert2.scss'
 Vue.use(Vuetify)
 Vue.use(VueRouter)
 
-Vue.component('test-page', require('./components/panel').default);
+Vue.component('admin-panel', require('./components/panel').default);
 
 const routes = [
     {path: '/userWallet', component: require('./components/admin/userWallet').default},
@@ -18,8 +18,8 @@ const routes = [
     {path: '/submitOrder', component: require('./components/admin/submitOrder').default},
     {path: '/productList', component: require('./components/admin/productList').default},
     {path: '/reports', component: require('./components/admin/reports').default},
+    {path: '/walletCharge', component: require('./components/admin/walletCharge').default},
 ]
-
 const router = new VueRouter({
     routes,
     mode: 'history'

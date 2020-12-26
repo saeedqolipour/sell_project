@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UsersOrder;
 use App\Models\UsersWallet;
+use Carbon\Carbon;
+use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
+use Date\Date;
+use Date\Jalali;
 
 class UserController extends Controller
 {
@@ -111,6 +116,22 @@ class UserController extends Controller
             return response()->json(['status' => 0, 'title' => 'خطا', 'type' => 'error', 'message' => 'این کد ملی در سیستم یافت نشد']);
         } else {
             return response()->json(['wallet' => $user->wallet->wallet_balance, 'nameAndFamily' => $user->first_name . ' ' . $user->last_name]);
+        }
+    }
+
+    public function getReport(Request $request)
+    {
+        $orders = UsersOrder::where('user_id', $request->get('userId'))->with('product')->latest()->get();
+        $items = [];
+        foreach ($orders as $order) {
+            $date = Verta::instance($order->created_at);
+            $date->timezone('Asia/Tehran');
+            $items[] = ['id' => $order->id, 'user_id' => $order->user_id, 'product' => $order->product[0]->product_name, 'price' => $order->price . ' تومان ', 'date' => $date->year . '-' . $date->month . '-' . $date->day, 'time' => $date->hour . ':' . $date->minute];
+        }
+        if ($orders) {
+            return response()->json(['orders' => $items]);
+        } else {
+            return 0;
         }
     }
 }

@@ -20,6 +20,7 @@ const routes = [
     {path: '/reports', component: require('./components/admin/reports').default},
     {path: '/walletCharge', component: require('./components/admin/walletCharge').default},
 ]
+
 const router = new VueRouter({
     routes,
     mode: 'history'
@@ -35,3 +36,16 @@ const app = new Vue({
     }),
     router,
 });
+
+
+router.beforeEach((to, from, next) => {
+        if (to.path === '/lock') {
+            localStorage.clear();
+        }
+        if (localStorage.admin !== "1" || localStorage.admin === null || localStorage.admin === undefined) {
+            location.replace("/");
+        } else {
+            next()
+        }
+    }
+);

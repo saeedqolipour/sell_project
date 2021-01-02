@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UsersOrder;
 use App\Models\UsersWallet;
-use Carbon\Carbon;
-use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
-use Date\Date;
-use Date\Jalali;
+use Hekmatinasser\Verta\Verta;
+use Illuminate\Support\Facades\Log;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class UserController extends Controller
+class UserController extends Controller implements JWTSubject
 {
     /**
      * Display a listing of the resource.
@@ -55,6 +54,7 @@ class UserController extends Controller
                     'user_id' => $user->id,
                     'wallet_balance' => 0
                 ]);
+                Log::info('Register New User : ' . $request->get('nationalCode'));
                 return response()->json(['status' => 200, 'title' => 'موفقیت آمیز', 'type' => 'success', 'message' => 'عملیات با موفقیت انجام شد ']);
             } else {
                 return response()->json(['status' => 0, 'title' => 'خطا', 'type' => 'error', 'message' => 'ظاهرا مشکلی در ثبت کاربر به وجود آمده ']);
@@ -133,5 +133,24 @@ class UserController extends Controller
         } else {
             return 0;
         }
+    }
+
+    public function checkLogin(Request $request)
+    {
+        if ($request->username === 'admin' && $request->password === 'admin') {
+            return response()->json(['status' => 1]);
+        }
+        Log::info('Access Denied = Username :  ' . $request->username . ' ' . ' Password :  ' . $request->password);
+        return response()->json(['status' => 0, 'title' => 'خطا', 'type' => 'error', 'message' => 'عدم دسترسی به پنل مدیریت']);
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

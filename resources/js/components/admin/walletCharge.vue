@@ -76,21 +76,30 @@ export default {
     }, methods: {
         formValidate() {
             if (this.$refs.form.validate()) {
-                axios.post('api/wallet', {
-                    nationalCode: this.nationalCode,
-                    chargeValue: this.walletCharge,
-                }).then((response) => {
+                if (localStorage.admin) {
+                    axios.post('api/wallet', {
+                        nationalCode: this.nationalCode,
+                        chargeValue: this.walletCharge,
+                    }).then((response) => {
+                        Swal.fire({
+                            title: response.data.title,
+                            text: response.data.message,
+                            icon: response.data.type,
+                            confirmButtonText: 'تمام'
+                        })
+                        this.$refs.form.reset()
+                        this.loading = false
+                    }).catch((error) => {
+                        console.log('Error')
+                    })
+                } else {
                     Swal.fire({
-                        title: response.data.title,
-                        text: response.data.message,
-                        icon: response.data.type,
+                        title: 'خطا',
+                        text: 'دسترسی غیر مجاز',
+                        icon: 'error',
                         confirmButtonText: 'تمام'
                     })
-                    this.$refs.form.reset()
-                    this.loading = false
-                }).catch((error) => {
-                    console.log('Error')
-                })
+                }
             }
         },
     },

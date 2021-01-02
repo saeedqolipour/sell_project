@@ -85,29 +85,38 @@ export default {
         ],
     }), methods: {
         searchUser() {
-            axios.post('api/user/wallet', {
-                nationalCode: this.nationalCode
-            }).then((response) => {
-                if (response.data.wallet || response.data.wallet === 0) {
-                    this.userWallet = response.data.wallet
-                    this.nameAndFamily = response.data.nameAndFamily
-                    this.dialog = true;
-                } else {
+            if (localStorage.admin) {
+                axios.post('api/user/wallet', {
+                    nationalCode: this.nationalCode
+                }).then((response) => {
+                    if (response.data.wallet || response.data.wallet === 0) {
+                        this.userWallet = response.data.wallet
+                        this.nameAndFamily = response.data.nameAndFamily
+                        this.dialog = true;
+                    } else {
+                        Swal.fire({
+                            title: response.data.title,
+                            text: response.data.message,
+                            icon: response.data.type,
+                            confirmButtonText: 'تمام'
+                        })
+                    }
+                }).catch((error) => {
                     Swal.fire({
-                        title: response.data.title,
-                        text: response.data.message,
-                        icon: response.data.type,
+                        title: 'خطا',
+                        text: 'عملیات با خطا موجه شد',
+                        icon: 'error',
                         confirmButtonText: 'تمام'
                     })
-                }
-            }).catch((error) => {
+                })
+            } else {
                 Swal.fire({
                     title: 'خطا',
-                    text: 'عملیات با خطا موجه شد',
+                    text: 'دسترسی غیر مجاز',
                     icon: 'error',
                     confirmButtonText: 'تمام'
                 })
-            })
+            }
         },
         formValidate() {
             if (this.$refs.form.validate()) {

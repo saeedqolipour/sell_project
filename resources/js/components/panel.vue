@@ -1,6 +1,5 @@
 <template>
     <v-app id="inspire">
-
         <v-navigation-drawer
             v-model="drawer"
             app
@@ -18,9 +17,9 @@
                 nav
                 dense
             >
-                <v-list-item-group
-                    v-model="selectedItem"
-                    color="primary"
+                <v-list-item-group :style="style"
+                                   v-model="selectedItem"
+                                   color="primary"
                 >
                     <v-list-item
                         v-for="(item, i) in items"
@@ -43,8 +42,7 @@
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>سامانه ثبت اطلاعات فروش</v-toolbar-title>
         </v-app-bar>
-
-        <v-main>
+        <v-main :style="style">
             <v-container>
                 <v-row>
                     <v-col class="lg-12 md-12">
@@ -53,14 +51,18 @@
                 </v-row>
             </v-container>
         </v-main>
+        <loginForm></loginForm>
     </v-app>
 </template>
 
 <script>
+import Login from './admin/login'
+
 export default {
     data: () => ({
         drawer: null,
         selectedItem: 0,
+        style: '',
         items: [
             {text: 'صفحه اصلی', icon: 'mdi-home', to: '/'},
             {text: 'افزودن کاربر', icon: 'mdi-account', to: '/addUser'},
@@ -70,8 +72,17 @@ export default {
             {text: 'لیست محصولات', icon: 'mdi-view-module', to: '/productList'},
             {text: 'ثبت سفارش', icon: 'mdi-cart-plus', to: '/submitOrder'},
             {text: 'گزارشات', icon: 'mdi-chart-bar', to: '/reports'},
+            {text: 'قفل پنل کاربری', icon: 'mdi-lock', to: '/lock'}
         ],
-    })
+    }), components: {
+        'loginForm': Login
+    }, beforeMount() {
+        if (localStorage.admin) {
+            this.style = '';
+        } else {
+            this.style = 'filter:blur(10px)';
+        }
+    }
 }
 </script>
 

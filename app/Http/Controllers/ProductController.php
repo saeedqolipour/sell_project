@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\UsersWallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -45,6 +46,7 @@ class ProductController extends Controller
                 'product_price' => $request->get('productPrice')
             ]);
             if ($product) {
+                Log::info('add Product');
                 return response()->json(['status' => 200, 'title' => 'موفقیت آمیز', 'type' => 'success', 'message' => 'عملیات با موفقیت انجام شد ']);
             } else {
                 return response()->json(['status' => 0, 'title' => 'خطا', 'type' => 'error', 'message' => 'ظاهرا مشکلی در ثبت محصول به وجود آمده ']);

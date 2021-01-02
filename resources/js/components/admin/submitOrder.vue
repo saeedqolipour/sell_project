@@ -95,34 +95,42 @@ export default {
         value: null,
     }), methods: {
         showSaveOrderDialog() {
-            console.log(this.selectedProducts)
-            if (this.selectedProducts.length === 0 || this.selectedUser.length === 0) {
+            if (localStorage.admin) {
+                if (this.selectedProducts.length === 0 || this.selectedUser.length === 0) {
+                    Swal.fire({
+                        title: 'خطا',
+                        text: 'لطفا تمام فیلد ها را تکمیل نمایید',
+                        icon: 'error',
+                        confirmButtonText: 'تمام'
+                    })
+                } else {
+                    axios.post('api/product/getOrderProducts', {
+                        orders: this.selectedProducts,
+                        userId: this.selectedUser
+                    }).then((response) => {
+                        if (response.data.status === 0) {
+                            Swal.fire({
+                                title: 'عدم موجودی کافی',
+                                text: 'موجودی کاربر : ' + response.data.wallet + ' تومان ',
+                                icon: 'error',
+                                confirmButtonText: 'تمام'
+                            })
+                        } else {
+                            this.totalPrice = response.data.totalPrice
+                            this.nameAndFamily = response.data.user.first_name + ' ' + response.data.user.last_name
+                            this.dialog = true
+                        }
+                    }).catch((error) => {
+                        console.log("error")
+                    });
+                }
+            } else {
                 Swal.fire({
                     title: 'خطا',
-                    text: 'لطفا تمام فیلد ها را تکمیل نمایید',
+                    text: 'دسترسی غیر مجاز',
                     icon: 'error',
                     confirmButtonText: 'تمام'
                 })
-            } else {
-                axios.post('api/product/getOrderProducts', {
-                    orders: this.selectedProducts,
-                    userId: this.selectedUser
-                }).then((response) => {
-                    if (response.data.status === 0) {
-                        Swal.fire({
-                            title: 'عدم موجودی کافی',
-                            text: 'موجودی کاربر : ' + response.data.wallet + ' تومان ',
-                            icon: 'error',
-                            confirmButtonText: 'تمام'
-                        })
-                    } else {
-                        this.totalPrice = response.data.totalPrice
-                        this.nameAndFamily = response.data.user.first_name + ' ' + response.data.user.last_name
-                        this.dialog = true
-                    }
-                }).catch((error) => {
-                    console.log("error")
-                });
             }
         },
         productText(item) {

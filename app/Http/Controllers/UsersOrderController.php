@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\UsersOrder;
 use App\Models\UsersWallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UsersOrderController extends Controller
 {
@@ -52,6 +53,7 @@ class UsersOrderController extends Controller
         $wallet->wallet_balance = $wallet->wallet_balance - $totalOrders;
         $wallet->save();
         if ($wallet) {
+            Log::info('Buy-UserId : ' . $userId);
             return response()->json(['status' => 200, 'title' => 'موفقیت آمیز', 'type' => 'success', 'message' => 'عملیات با موفقیت انجام شد ']);
         } else {
             return response()->json(['status' => 0, 'title' => 'خطا', 'type' => 'error', 'message' => 'ظاهرا مشکلی در خرید به وجود آمده ']);

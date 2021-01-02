@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UsersWallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UsersWalletController extends Controller
 {
@@ -42,6 +43,7 @@ class UsersWalletController extends Controller
             $userWallet->wallet_balance = $userWallet->wallet_balance + $request->get('chargeValue');
             $userWallet->save();
             if ($userWallet) {
+                Log::info('Wallet Charge :  ' . $request->get('national_code') . ' Value :  ' . $request->get('chargeValue') . ' Toman');
                 return response()->json(['status' => 200, 'title' => 'موفقیت آمیز', 'type' => 'success', 'message' => 'عملیات با موفقیت انجام شد ']);
             } else {
                 return response()->json(['status' => 0, 'title' => 'خطا', 'type' => 'error', 'message' => 'ظاهرا مشکلی در افزایش موجودی پیش امده است']);

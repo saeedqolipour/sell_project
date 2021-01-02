@@ -18,15 +18,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('api')->prefix('auth')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::apiResource('user', UserController::class);
+Route::post('user/wallet', 'App\Http\Controllers\UserController@wallet');
+Route::post('user/getReport', 'App\Http\Controllers\UserController@getReport');
+Route::post('user/checkLogin', 'App\Http\Controllers\UserController@checkLogin');
+
 Route::apiResource('wallet', UsersWalletController::class);
 Route::apiResource('product', ProductController::class);
 Route::apiResource('orders', UsersOrderController::class);
-Route::post('user/wallet', 'App\Http\Controllers\UserController@wallet');
-Route::post('user/getReport', 'App\Http\Controllers\UserController@getReport');
+
 Route::post('product/getOrderProducts', 'App\Http\Controllers\ProductController@getOrderProducts');
 

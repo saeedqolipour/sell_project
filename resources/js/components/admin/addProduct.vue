@@ -77,26 +77,28 @@ export default {
     }, methods: {
         loader() {
             this.loading = true;
-            axios.post('api/product', {
-                productName: this.productName,
-                productPrice: this.productPrice,
-            }).then((response) => {
-                Swal.fire({
-                    title: response.data.title,
-                    text: response.data.message,
-                    icon: response.data.type,
-                    confirmButtonText: 'تمام'
+            if (localStorage.admin) {
+                axios.post('api/product', {
+                    productName: this.productName,
+                    productPrice: this.productPrice,
+                }).then((response) => {
+                    Swal.fire({
+                        title: response.data.title,
+                        text: response.data.message,
+                        icon: response.data.type,
+                        confirmButtonText: 'تمام'
+                    })
+                    this.loading = false
+                }).catch((error) => {
+                    Swal.fire({
+                        title: 'خطا',
+                        text: 'عملیات با خطا موجه شد',
+                        icon: 'error',
+                        confirmButtonText: 'تمام'
+                    })
                 })
                 this.loading = false
-            }).catch((error) => {
-                Swal.fire({
-                    title: 'خطا',
-                    text: 'عملیات با خطا موجه شد',
-                    icon: 'error',
-                    confirmButtonText: 'تمام'
-                })
-            })
-            this.loading = false
+            }
         },
         formValidate() {
             if (this.$refs.form.validate()) {
